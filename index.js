@@ -5,7 +5,10 @@ let template = document.querySelector(".template").content;
 let elLinks = document.querySelector(".hero-links");
 let elSelect = $(".form-select");
 let elRating = $(".search-rating");
-let elSearchByName = $(".search-name");
+let elGlobalSearch = $(".name-search");
+let elSearchName = $(".search-name");
+let elFrom = $(".search-form");
+
 
 
 movies.splice(90);
@@ -14,6 +17,22 @@ movies.splice(90);
 
 
 renderUi(movies)
+
+// ---------------- Global search by name -------------------
+
+
+elGlobalSearch.addEventListener("input", (evt)=>{
+    let elValue = elGlobalSearch.value;
+
+
+    let filteredArr = movies.filter((item)=>{
+        return item.title.toLocaleLowerCase().includes(elValue);
+    })
+
+    renderUi1(filteredArr);
+})
+
+// ---------------- Global search by name end -------------------
 
 
 
@@ -58,49 +77,66 @@ categoriesArr.forEach(item=>{
     elSelect.appendChild(newLi);
 });
 
-elSelect.addEventListener("change",(evt)=>{
-    let elValue = evt.target.value;
-    let filteredArr = movies.filter(item=>{
-        return item.categories.includes(elValue);
-    })
+// elSelect.addEventListener("change",(evt)=>{
+//     let elValue = evt.target.value;
+//     let filteredArr = movies.filter(item=>{
+//         return item.categories.includes(elValue);
+//     })
 
-    renderUi1(filteredArr)
-});
+//     renderUi1(filteredArr)
+// });
 
 // --------------- Sorted by categories end------------------------
 
 
 
-// ---------------- search by name -------------------
 
-
-console.log(elSearchByName);
-
-elSearchByName.addEventListener("input", (evt)=>{
-    let elValue = elSearchByName.value;
-
-
-    let filteredArr = movies.filter((item)=>{
-        return item.title.toLocaleLowerCase().includes(elValue);
-    })
-
-    renderUi1(filteredArr);
-})
-
-// ---------------- search by name end -------------------
 
 // ---------------- search by rating -------------------
 
 
-elRating.addEventListener("input", (evt)=>{
-    let elValue = evt.target.value;
+// elRating.addEventListener("input", (evt)=>{
+//     let elValue = evt.target.value;
     
-    let filteredArr = movies.filter((item)=>{
-        return item.imdbRating == elValue;
-    })
+//     let filteredArr = movies.filter((item)=>{
+//         return item.imdbRating == elValue;
+//     })
 
-    renderUi1(filteredArr)
-})
+//     renderUi1(filteredArr)
+// })
 
 
 // ---------------- search by rating -------------------
+
+
+function filterBySearch(arr){
+    elFrom.addEventListener("submit", (evt)=>{
+        evt.preventDefault();
+        let elSelectValue = elSelect.value;
+        let elRatingValue = elRating.value;
+        let elSearchValue = elSearchName.value;
+        console.log(elSelectValue, elRatingValue, elSearchValue);
+    
+        if(elSearchValue || elRatingValue || elSelectValue){
+            let filteredByCategoryArr = arr.filter((item)=>{
+                return item.categories.includes(elSelectValue);
+            })
+        
+            let filteredByRating = filteredByCategoryArr.filter((item)=>{
+                return item.imdbRating == elRatingValue;
+            })
+        
+            let filteredByName = filteredByRating.filter((item)=>{
+                return item.title.toLowerCase().includes(elSearchValue);
+            })
+        
+            if(filteredByName.length){
+                renderUi(filteredByName);
+            } else{
+                cards.innerHTML = `<h1 class="text-danger text-center fs-3">Nothing is found</h1>`
+            }
+        }
+    })
+}
+
+filterBySearch(movies)
