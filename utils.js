@@ -37,6 +37,7 @@ const renderUi = (arr, elNumber) => {
         let elRuntime = copy.querySelector(".runtime");
         let elLang = copy.querySelector(".lang");
         let elLink = copy.querySelector(".youtube-link");
+        let elAboutBtn = copy.querySelector(".about-film");
 
         elImg.setAttribute("src", `${item.smallThumbnail}`);
         elTitle.textContent = `${item.title}`;
@@ -47,6 +48,7 @@ const renderUi = (arr, elNumber) => {
           "href",
           `https://youtube.com/embed/${item.youtubeId}`
         );
+        elAboutBtn.dataset.id = item.imdbId;
 
         cards.appendChild(copy);
       }
@@ -61,6 +63,7 @@ const renderUi = (arr, elNumber) => {
       let elRuntime = copy.querySelector(".runtime");
       let elLang = copy.querySelector(".lang");
       let elLink = copy.querySelector(".youtube-link");
+      let elAboutBtn = copy.querySelector(".about-film");
 
       elImg.setAttribute("src", `${item.smallThumbnail}`);
       elTitle.textContent = `${item.title}`;
@@ -71,6 +74,7 @@ const renderUi = (arr, elNumber) => {
         "href",
         `https://youtube.com/embed/${item.youtubeId}`
       );
+      elAboutBtn.dataset.id = item.imdbId;
 
       cards.appendChild(copy);
     });

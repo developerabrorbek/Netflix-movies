@@ -8,7 +8,7 @@ let elRating = $(".search-rating");
 let elGlobalSearch = $(".name-search");
 let elSearchName = $(".search-name");
 let elFrom = $(".search-form");
-
+let elModal = $(".modal");
 
 
 movies.splice(90);
@@ -140,3 +140,37 @@ function filterBySearch(arr){
 }
 
 filterBySearch(movies)
+
+
+cards.addEventListener("click", (evt)=>{
+    let id;
+    if(evt.target.className.includes("about-film")){
+        id = evt.target.getAttribute("data-id");
+
+        movies.forEach((item)=>{
+            if(item.imdbId == id){
+                elModal.innerHTML = `<wrapper class="d-flex justify-content-between w-50">
+                <div>
+                <h2>${item.title}</h2>
+                <video src="/embed/${item.youtubeId}" controls></video>
+                </div>
+                <p class="w-50 text-center">${item.summary}</p>
+                </wrapper>`;
+            }
+        })
+
+        elModal.classList.remove("d-none")
+        elModal.classList.add("d-flex")
+    }
+    console.log(elModal);
+})
+
+elModal.addEventListener("dblclick", (evt)=>{
+    elModal.classList.remove("d-flex");
+    elModal.classList.add("d-none");
+})
+
+
+
+
+
