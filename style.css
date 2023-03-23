@@ -6,6 +6,26 @@
     overflow-y: scroll;
 }
 
+.basket-wrapper:hover{
+    background: #fff;
+    cursor: pointer;
+}
+
+.basket-cards{
+    width: 300px;
+    display: none;
+    position: absolute;
+    top: 25px;
+    right: 100px;
+    flex-direction: column;
+    gap: 18px;
+    padding: 12px;
+    border-radius: 15px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+
 .year{
     font-size: 18px;
     font-weight: bold;

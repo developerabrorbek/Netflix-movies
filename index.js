@@ -1,6 +1,8 @@
 "use strict";
 
 let cards = document.querySelector(".cards");
+let elBasketWrapper = document.querySelector(".basket-wrapper");
+let basketCards = document.querySelector(".basket-cards");
 let template = document.querySelector(".template").content;
 let elLinks = document.querySelector(".hero-links");
 let elSelect = $(".form-select");
@@ -29,7 +31,7 @@ elGlobalSearch.addEventListener("input", (evt)=>{
         return item.title.toLocaleLowerCase().includes(elValue);
     })
 
-    renderUi1(filteredArr);
+    renderUi(filteredArr);
 })
 
 // ---------------- Global search by name end -------------------
@@ -38,7 +40,7 @@ elGlobalSearch.addEventListener("input", (evt)=>{
 
 // ----------------- pagination added -------------------
 
-let numbers = Math.ceil(movies.length / 9);
+let numbers = Math.ceil(movies.length / 8);
 for(let i=0; i<numbers; i++){
     let newLi = elCreator("li", `${i+1}`);
     newLi.setAttribute("class", "hero-link py-2 px-3 rounded-2 shadow");
@@ -50,7 +52,8 @@ let numberLink = $$(".hero-link");
 numberLink.forEach(item=>{
     item.addEventListener("click", (evt)=>{
         let elValue = +evt.srcElement.innerHTML;
-        renderUi(movies, elValue*9);
+        let slicedArray = movies.slice((elValue*8-8),elValue*8)
+        renderUi(slicedArray);
     })
 });
 
@@ -77,69 +80,16 @@ categoriesArr.forEach(item=>{
     elSelect.appendChild(newLi);
 });
 
-// elSelect.addEventListener("change",(evt)=>{
-//     let elValue = evt.target.value;
-//     let filteredArr = movies.filter(item=>{
-//         return item.categories.includes(elValue);
-//     })
-
-//     renderUi1(filteredArr)
-// });
-
 // --------------- Sorted by categories end------------------------
 
 
-
-
-
-// ---------------- search by rating -------------------
-
-
-// elRating.addEventListener("input", (evt)=>{
-//     let elValue = evt.target.value;
-    
-//     let filteredArr = movies.filter((item)=>{
-//         return item.imdbRating == elValue;
-//     })
-
-//     renderUi1(filteredArr)
-// })
-
-
-// ---------------- search by rating -------------------
-
-
-function filterBySearch(arr){
-    elFrom.addEventListener("submit", (evt)=>{
-        evt.preventDefault();
-        let elSelectValue = elSelect.value;
-        let elRatingValue = elRating.value;
-        let elSearchValue = elSearchName.value;
-        console.log(elSelectValue, elRatingValue, elSearchValue);
-    
-        if(elSearchValue || elRatingValue || elSelectValue){
-            let filteredByCategoryArr = arr.filter((item)=>{
-                return item.categories.includes(elSelectValue);
-            })
-        
-            let filteredByRating = filteredByCategoryArr.filter((item)=>{
-                return item.imdbRating == elRatingValue;
-            })
-        
-            let filteredByName = filteredByRating.filter((item)=>{
-                return item.title.toLowerCase().includes(elSearchValue);
-            })
-        
-            if(filteredByName.length){
-                renderUi(filteredByName);
-            } else{
-                cards.innerHTML = `<h1 class="text-danger text-center fs-3">Nothing is found</h1>`
-            }
-        }
-    })
-}
-
+// ----------------- Film search added ---------------------
 filterBySearch(movies)
+
+// ----------------- Film search added end ---------------------
+
+
+
 
 
 cards.addEventListener("click", (evt)=>{
@@ -161,6 +111,7 @@ cards.addEventListener("click", (evt)=>{
 
         elModal.classList.remove("d-none")
         elModal.classList.add("d-flex")
+
     }
     console.log(elModal);
 })
@@ -168,6 +119,36 @@ cards.addEventListener("click", (evt)=>{
 elModal.addEventListener("dblclick", (evt)=>{
     elModal.classList.remove("d-flex");
     elModal.classList.add("d-none");
+})
+
+
+
+
+
+elBasketWrapper.addEventListener("mousedown", (evt)=>{
+    basketCards.classList.remove("d-none");
+    basketCards.classList.add("d-flex")
+})
+
+
+
+// ----------------- basket added ---------------------
+let filteredArr = [];
+cards.addEventListener("click", (evt)=>{
+    let id;
+    
+    if(evt.target.className.includes("watch-later")){
+        id = evt.target.getAttribute("data-id");
+
+        movies.forEach((item)=>{
+            if(item.imdbId == id){
+                if(!filteredArr.includes(item)){
+                    filteredArr.push(item);
+                }
+            }
+        })
+    }
+    renderUiBasket(filteredArr)
 })
 
 

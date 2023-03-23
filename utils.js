@@ -1,6 +1,6 @@
 "use strict";
 
-const renderUi1 = (arr) => {
+const renderUi = (arr) => {
   cards.innerHTML = "";
   arr.forEach((item) => {
     let copy = template.cloneNode(true);
@@ -11,6 +11,8 @@ const renderUi1 = (arr) => {
     let elRuntime = copy.querySelector(".runtime");
     let elLang = copy.querySelector(".lang");
     let elLink = copy.querySelector(".youtube-link");
+    let elAboutBtn = copy.querySelector(".about-film");
+    let elWatchLater = copy.querySelector(".watch-later");
 
     elImg.setAttribute("src", `${item.smallThumbnail}`);
     elTitle.textContent = `${item.title}`;
@@ -18,68 +20,96 @@ const renderUi1 = (arr) => {
     elRuntime.textContent = `${time(item.runtime)}`;
     elLang.textContent = `${item.language}`;
     elLink.setAttribute("href", `https://youtube.com/embed/${item.youtubeId}`);
+    elAboutBtn.dataset.id = item.imdbId;
+    elWatchLater.dataset.id = item.imdbId;
 
     cards.appendChild(copy);
   });
 };
 
-const renderUi = (arr, elNumber) => {
-  cards.innerHTML = "";
+const renderUiBasket = (arr) => {
+  basketCards.innerHTML = "";
+  arr.forEach((item) => {
+    let copy = template.cloneNode(true);
 
-  if (elNumber) {
-    arr.forEach((item, index) => {
-      if (index > elNumber - 10 && index < elNumber) {
-        let copy = template.cloneNode(true);
+    let elImg = copy.querySelector(".card-img");
+    let elTitle = copy.querySelector(".card-body__title");
+    let elYear = copy.querySelector(".year");
+    let elRuntime = copy.querySelector(".runtime");
+    let elLang = copy.querySelector(".lang");
+    let elLink = copy.querySelector(".youtube-link");
+    let elAboutBtn = copy.querySelector(".about-film");
+    let elWatchLater = copy.querySelector(".watch-later");
 
-        let elImg = copy.querySelector(".card-img");
-        let elTitle = copy.querySelector(".card-body__title");
-        let elYear = copy.querySelector(".year");
-        let elRuntime = copy.querySelector(".runtime");
-        let elLang = copy.querySelector(".lang");
-        let elLink = copy.querySelector(".youtube-link");
-        let elAboutBtn = copy.querySelector(".about-film");
+    elImg.setAttribute("src", `${item.smallThumbnail}`);
+    elTitle.textContent = `${item.title}`;
+    elYear.textContent = `${item.year}`;
+    elRuntime.textContent = `${time(item.runtime)}`;
+    elLang.textContent = `${item.language}`;
+    elLink.setAttribute("href", `https://youtube.com/embed/${item.youtubeId}`);
+    elAboutBtn.dataset.id = item.imdbId;
+    elWatchLater.dataset.id = item.imdbId;
 
-        elImg.setAttribute("src", `${item.smallThumbnail}`);
-        elTitle.textContent = `${item.title}`;
-        elYear.textContent = `${item.year}`;
-        elRuntime.textContent = `${time(item.runtime)}`;
-        elLang.textContent = `${item.language}`;
-        elLink.setAttribute(
-          "href",
-          `https://youtube.com/embed/${item.youtubeId}`
-        );
-        elAboutBtn.dataset.id = item.imdbId;
-
-        cards.appendChild(copy);
-      }
-    });
-  } else {
-    arr.forEach((item) => {
-      let copy = template.cloneNode(true);
-
-      let elImg = copy.querySelector(".card-img");
-      let elTitle = copy.querySelector(".card-body__title");
-      let elYear = copy.querySelector(".year");
-      let elRuntime = copy.querySelector(".runtime");
-      let elLang = copy.querySelector(".lang");
-      let elLink = copy.querySelector(".youtube-link");
-      let elAboutBtn = copy.querySelector(".about-film");
-
-      elImg.setAttribute("src", `${item.smallThumbnail}`);
-      elTitle.textContent = `${item.title}`;
-      elYear.textContent = `${item.year}`;
-      elRuntime.textContent = `${time(item.runtime)}`;
-      elLang.textContent = `${item.language}`;
-      elLink.setAttribute(
-        "href",
-        `https://youtube.com/embed/${item.youtubeId}`
-      );
-      elAboutBtn.dataset.id = item.imdbId;
-
-      cards.appendChild(copy);
-    });
-  }
+    basketCards.appendChild(copy);
+  });
 };
+
+//   cards.innerHTML = "";
+
+//   if (elNumber) {
+//     arr.forEach((item, index) => {
+//       if (index > elNumber - 10 && index < elNumber) {
+//         let copy = template.cloneNode(true);
+
+//         let elImg = copy.querySelector(".card-img");
+//         let elTitle = copy.querySelector(".card-body__title");
+//         let elYear = copy.querySelector(".year");
+//         let elRuntime = copy.querySelector(".runtime");
+//         let elLang = copy.querySelector(".lang");
+//         let elLink = copy.querySelector(".youtube-link");
+//         let elAboutBtn = copy.querySelector(".about-film");
+
+//         elImg.setAttribute("src", `${item.smallThumbnail}`);
+//         elTitle.textContent = `${item.title}`;
+//         elYear.textContent = `${item.year}`;
+//         elRuntime.textContent = `${time(item.runtime)}`;
+//         elLang.textContent = `${item.language}`;
+//         elLink.setAttribute(
+//           "href",
+//           `https://youtube.com/embed/${item.youtubeId}`
+//         );
+//         elAboutBtn.dataset.id = item.imdbId;
+
+//         cards.appendChild(copy);
+//       }
+//     });
+//   } else {
+//     arr.forEach((item) => {
+//       let copy = template.cloneNode(true);
+
+//       let elImg = copy.querySelector(".card-img");
+//       let elTitle = copy.querySelector(".card-body__title");
+//       let elYear = copy.querySelector(".year");
+//       let elRuntime = copy.querySelector(".runtime");
+//       let elLang = copy.querySelector(".lang");
+//       let elLink = copy.querySelector(".youtube-link");
+//       let elAboutBtn = copy.querySelector(".about-film");
+
+//       elImg.setAttribute("src", `${item.smallThumbnail}`);
+//       elTitle.textContent = `${item.title}`;
+//       elYear.textContent = `${item.year}`;
+//       elRuntime.textContent = `${time(item.runtime)}`;
+//       elLang.textContent = `${item.language}`;
+//       elLink.setAttribute(
+//         "href",
+//         `https://youtube.com/embed/${item.youtubeId}`
+//       );
+//       elAboutBtn.dataset.id = item.imdbId;
+
+//       cards.appendChild(copy);
+//     });
+//   }
+// };
 
 const elCreator = (tagName, textContent) => {
   let newEl = document.createElement(tagName);
@@ -114,4 +144,34 @@ function time(runtime){
   }
 
   return time;
+}
+
+function filterBySearch(arr){
+  elFrom.addEventListener("submit", (evt)=>{
+      evt.preventDefault();
+      let elSelectValue = elSelect.value;
+      let elRatingValue = elRating.value;
+      let elSearchValue = elSearchName.value;
+      console.log(elSelectValue, elRatingValue, elSearchValue);
+  
+      if(elSearchValue || elRatingValue || elSelectValue){
+          let filteredByCategoryArr = arr.filter((item)=>{
+              return item.categories.includes(elSelectValue);
+          })
+      
+          let filteredByRating = filteredByCategoryArr.filter((item)=>{
+              return item.imdbRating == elRatingValue;
+          })
+      
+          let filteredByName = filteredByRating.filter((item)=>{
+              return item.title.toLowerCase().includes(elSearchValue);
+          })
+      
+          if(filteredByName.length){
+              renderUi(filteredByName);
+          } else{
+              cards.innerHTML = `<h1 class="text-danger text-center fs-3">Nothing is found</h1>`
+          }
+      }
+  })
 }
