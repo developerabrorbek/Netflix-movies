@@ -30,86 +30,19 @@ const renderUi = (arr) => {
 const renderUiBasket = (arr) => {
   basketCards.innerHTML = "";
   arr.forEach((item) => {
-    let copy = template.cloneNode(true);
+    let copy = basketTemplate.cloneNode(true);
 
-    let elImg = copy.querySelector(".card-img");
-    let elTitle = copy.querySelector(".card-body__title");
-    let elYear = copy.querySelector(".year");
-    let elRuntime = copy.querySelector(".runtime");
-    let elLang = copy.querySelector(".lang");
-    let elLink = copy.querySelector(".youtube-link");
-    let elAboutBtn = copy.querySelector(".about-film");
-    let elWatchLater = copy.querySelector(".watch-later");
+    let elImg = copy.querySelector(".basket-card__img");
+    let elTitle = copy.querySelector(".basket-title");
+    let closeCard = copy.querySelector(".basket-card__closer");
 
     elImg.setAttribute("src", `${item.smallThumbnail}`);
     elTitle.textContent = `${item.title}`;
-    elYear.textContent = `${item.year}`;
-    elRuntime.textContent = `${time(item.runtime)}`;
-    elLang.textContent = `${item.language}`;
-    elLink.setAttribute("href", `https://youtube.com/embed/${item.youtubeId}`);
-    elAboutBtn.dataset.id = item.imdbId;
-    elWatchLater.dataset.id = item.imdbId;
+    closeCard.dataset.id = `${item.imdbId}`;
 
     basketCards.appendChild(copy);
   });
 };
-
-//   cards.innerHTML = "";
-
-//   if (elNumber) {
-//     arr.forEach((item, index) => {
-//       if (index > elNumber - 10 && index < elNumber) {
-//         let copy = template.cloneNode(true);
-
-//         let elImg = copy.querySelector(".card-img");
-//         let elTitle = copy.querySelector(".card-body__title");
-//         let elYear = copy.querySelector(".year");
-//         let elRuntime = copy.querySelector(".runtime");
-//         let elLang = copy.querySelector(".lang");
-//         let elLink = copy.querySelector(".youtube-link");
-//         let elAboutBtn = copy.querySelector(".about-film");
-
-//         elImg.setAttribute("src", `${item.smallThumbnail}`);
-//         elTitle.textContent = `${item.title}`;
-//         elYear.textContent = `${item.year}`;
-//         elRuntime.textContent = `${time(item.runtime)}`;
-//         elLang.textContent = `${item.language}`;
-//         elLink.setAttribute(
-//           "href",
-//           `https://youtube.com/embed/${item.youtubeId}`
-//         );
-//         elAboutBtn.dataset.id = item.imdbId;
-
-//         cards.appendChild(copy);
-//       }
-//     });
-//   } else {
-//     arr.forEach((item) => {
-//       let copy = template.cloneNode(true);
-
-//       let elImg = copy.querySelector(".card-img");
-//       let elTitle = copy.querySelector(".card-body__title");
-//       let elYear = copy.querySelector(".year");
-//       let elRuntime = copy.querySelector(".runtime");
-//       let elLang = copy.querySelector(".lang");
-//       let elLink = copy.querySelector(".youtube-link");
-//       let elAboutBtn = copy.querySelector(".about-film");
-
-//       elImg.setAttribute("src", `${item.smallThumbnail}`);
-//       elTitle.textContent = `${item.title}`;
-//       elYear.textContent = `${item.year}`;
-//       elRuntime.textContent = `${time(item.runtime)}`;
-//       elLang.textContent = `${item.language}`;
-//       elLink.setAttribute(
-//         "href",
-//         `https://youtube.com/embed/${item.youtubeId}`
-//       );
-//       elAboutBtn.dataset.id = item.imdbId;
-
-//       cards.appendChild(copy);
-//     });
-//   }
-// };
 
 const elCreator = (tagName, textContent) => {
   let newEl = document.createElement(tagName);
@@ -174,4 +107,26 @@ function filterBySearch(arr){
           }
       }
   })
+}
+
+function addWatchLater(arr) {
+  let filteredArr = [];
+  cards.addEventListener("click", (evt) => {
+    let id;
+
+    if (evt.target.className.includes("watch-later")) {
+      id = evt.target.getAttribute("data-id");
+
+      arr.forEach((item) => {
+        if (item.imdbId == id) {
+          if (!filteredArr.includes(item)) {
+            filteredArr.push(item);
+          }
+        }
+      });
+    }
+
+    basketArr = [...filteredArr];
+    renderUiBasket(filteredArr);
+  });
 }

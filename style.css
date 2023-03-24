@@ -11,9 +11,13 @@
     cursor: pointer;
 }
 
-.basket-cards{
-    width: 300px;
+.basket{
     display: none;
+}
+
+.basket-cards{
+    width: 400px;
+    display: flex;
     position: absolute;
     top: 25px;
     right: 100px;
@@ -43,4 +47,108 @@
 
 .hero-link{
     background-color: rgba(255, 255, 255, 0.938);
+}
+
+
+
+
+/* modal template */
+
+.modal{
+    top: 0;
+    background-color: rgb(156, 156, 156);
+}
+
+.modal-card{
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 24px;
+}
+
+.modal-card__body{
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+    justify-content: flex-start;
+}
+
+.modal-extra{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 26px;
+}
+
+.ratings{
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.film-rating{
+    font-size: 22px;
+    font-weight: 600;
+    color: rgb(4, 26, 46);
+}
+
+
+.category{
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+}
+.categories{
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.938);
+}
+
+.summary{
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+}
+
+.modal-image{
+    border-radius: 15px;
+}
+
+.modal-close{
+    position: absolute;
+    top: 42px;
+    right: 42px;
+    background-color: rgb(206, 197, 197);
+    border-radius: 5px;
+}
+
+.modal-close:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+
+.basket-card__closer{
+    top: 6px;
+    right: 6px;
+}
+
+.basket-card__closer:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+
+.basket-closer{
+    top: 0;
+    left: -135px;
+    z-index: 9;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.basket-closer:hover{
+    opacity: 0.8;
+    cursor: pointer;
 }
